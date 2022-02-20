@@ -1,0 +1,11 @@
+instagrapi
+opencv-python
+easydev
+Pillow
+jupyter
+numpy
+sklearn
+pandas
+colormap
+webcolors
+matplotlib
