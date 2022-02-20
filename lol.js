@@ -12,11 +12,11 @@ $(function(){
         $('#wrap').append(`
             <a href="#" class="hb">
                 <!--div class="c">
-                <img src="http://localhost:8000/${aaa[elem]['name']}" alt=""/>
+                <img src="alrocar/fullsize/${aaa[elem]['name']}" alt=""/>
                 </div-->
             </a>
             <div class="fullBg ${aaa[elem]['name'].replaceAll('-', '_').replaceAll('.', '')}">
-                <img id="${aaa[elem]['name'].replaceAll('-', '_').replaceAll('.', '')}" src="http://localhost:8000/${aaa[elem]['name']}" alt=""></img>
+                <img id="${aaa[elem]['name'].replaceAll('-', '_').replaceAll('.', '')}" src="alrocar/fullsize/${aaa[elem]['name']}" alt=""></img>
             </div>
         `)
     }
@@ -153,7 +153,7 @@ $(function(){
         $(this).qtip({
             content: {
             button: true,
-            text: "<img height='250px' style='border-radius: 10px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);' src='http://localhost:8000/" + $(this).data("date") + "' />",
+            text: "<img height='250px' style='border-radius: 10px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);' src='alrocar/fullsize/" + $(this).data("date") + "' />",
                 title: ""
             },
             hide: {
