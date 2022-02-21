@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html><head>
+  <link href="https://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.css" media="Screen" rel="stylesheet" type="text/css" />
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
+
+    .gradient-bg-wiretap[data-v-0075175e]{background:#8a2387;background:linear-gradient(320deg,#f27121,#e94057,#8a2387)}
+    .gradient-bg-wiretap[data-v-0075175e]{background:#8a2387;background:linear-gradient(320deg,#e9c46a,#8a2387,#e76f51)}
+    .editor[data-v-04e2347d]{width:100%;min-height:100vh;position:relative;padding-bottom:24px}
+
+        #vis {display: table; margin: 0 auto; top: 20vh;}
+        #vis .year {display: table; margin: 0 auto; width: 70%;}
+        #vis .color { flex: 1 1 auto; min-height: 0; }
+        #vis h2 { background: #f0f0f0; font-size: 2rem; margin: 0; padding: 0.25em; text-align: center; color:rgba(0, 0, 0, 0.8); 
+        
+          -webkit-text-size-adjust: 100%;
+          -webkit-font-smoothing: antialiased;
+          font-family: "Shadows Into Light", Georgia, Serif;
+          color: #fff;
+          background: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          /* backdrop-filter: blur(5px); */
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          height: 2vh;
+          line-height: 0.7;
+          margin-top: 0.1em;
+        }
+        #vis h2 span {
+          font-weight: 700;
+        }
+        #vis .issue { display: flex; flex: 1 1 auto; flex-direction: column; height: 100%; max-width: 2.22%; transition: all 0.05s ease-in-out; }
+        #vis .issue:hover { box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); transform: scale(2, 1.2); z-index: 1000; }
+        #vis .issues { display: flex; height: 25vh; margin-top: 3px; }
+        #vis .issues.waiting { align-items: center; background: #f0f0f0; display: flex; }
+        #vis .issues.waiting:after { content: "Loading..."; margin: 0 auto; opacity: 0.4; }
+        #vis-wrapper.all { -webkit-overflow-scrolling: touch; overflow-x: scroll; overflow-y: hidden; }
+        #vis-wrapper.all #vis { display: flex; margin-top: 40px; flex-direction: row-reverse; width: 40000px; }
+        #vis-wrapper.all #vis h2 { background: none; flex: 1 1 auto; font-size: 12px; padding: 0; position: relative; }
+        #vis-wrapper.all #vis h2 span { border-left: 1px solid #000; top: -2.3em; left: 0; padding: 0.5em 0 0.6em 0.5em; position: absolute; }
+        #vis-wrapper.all #vis .issues { flex: 1 1 auto; height: 100%; transition: none; }
+        #vis-wrapper.all #vis .year { flex: 1 1 auto; height: 30vh; }
+        /* Popups (qTip) */
+        .qtip { background: #fff; box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); font-size: 16px; line-height: 1.4; }
+        .qtip h2 { font-size: 1em; }
+        .qtip p { margin: 0; }
+        .qtip-close { margin: 0; right: 5px; top: 5px; }
+        .qtip-icon .ui-icon { font-size: 20px; }
+        .qtip-content { padding: 20px; color: #2d2d2d; }
+        .qtip-content img { display: block; margin-bottom: 10px; width: 100%; }
+        .qtip-titlebar { padding: 10px 10px 0; }
+
+        *{margin:0;padding:0;}
+        a {color:inherit;text-decoration:none;}
+        body,html{
+        overflow:auto;
+        height:100%;
+        font-size:16px;
+        font-family: 'Montserrat', sans-serif;
+        background:#2c2c2c;
+        color:#fff;
+        }
+        #wrap{
+        position:absolute;
+        left:0; top:0;
+        width:100%;
+        height:100%;
+        display:flex;
+        align-items:stretch;
+        margin:0;
+        }
+        .hb {
+        position:relative;
+        width:25%;
+        z-index:1;
+        display:flex;
+        align-items:center;
+        z-index:2;
+        transform:scale(.97);
+        }
+        .c{
+        position:relative;
+        display:block;
+        max-width:90%;
+        }
+        .c img {
+        position:relative;
+        display:block;
+        width:100%;
+        height:auto;
+        z-index:2;
+        }
+        .fullBg {
+        position:fixed;top:0;left:0;width:100%;height:100%;
+        opacity:0;
+        transition:transform .5s, opacity .5s;
+        transform:scale(1);
+        z-index:4;
+        }
+        .pimpam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        .fullBg img {
+        width:100%;height:100%;
+        object-fit:cover;object-position:center;
+        opacity:.9;
+        }
+        #head {
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 10vh;
+          z-index: 999;
+        }
+        .preview-panel {
+          word-spacing: 1px;
+          -webkit-text-size-adjust: 100%;
+          -webkit-font-smoothing: antialiased;
+          font-family: "Inter",-apple-system,"Nunito",BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+          color: #fff;
+          font-size: 16px;
+          margin: 0;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 16px;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          /* backdrop-filter: blur(5px); */
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          width: 80%;
+          max-width: 600px;
+          height: 8vh;
+          top: 1vh;
+          margin: auto;
+          margin-top: 3vh;
+          transform: rotate(.015turn);
+        }
+        .preview-panel span {
+          display: table;
+          margin: 0 auto;
+          color: #fff;
+          font-weight: 700;
+          font-size: 2.5vh;
+          margin-top: 1.5vh;
+          font-family: "Shadows Into Light", Georgia, Serif;
+        }
+        .preview-panel .m {
+          display: table;
+          margin: 0 auto;
+          color: #fff;
+          font-weight: 700;
+          font-size: 1.5vh;
+          margin-bottom: 0.5vh;
+          margin-right: 0.5vh;
+          font-family: "Shadows Into Light", Georgia, Serif;
+        }
+  </style></head>
+  <body>
+    <div id="head">
+      <div data-v-0b8407f3="" class="preview-panel glass">
+        <span>Las paletas de color de El Jueves</span>
+        <p><a href="https://twitter.com/alrocar" target="_blank"><span class="m">@alrocar</span></a></p>
+      </div>
+    </div>
+    <div id="vis" style="width: 100%; position: absolute; bottom: 0px; z-index: 999"></div>
+    <!-- <div data-v-0075175e="" class="gradient-bg-wiretap">  -->
+    <!-- <div data-v-04e2347d="" data-v-007
+    5175e="" class="editor"> -->
+    <!-- <div class="pimpam"></div> -->
+    <script src="https://momentjs.com/downloads/moment.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.js" type="text/javascript"></script>
+    <script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
+    <script src="./imgdataeljuevestest.json"></script>
+    <script src="lolj.js">
+    </script>
+
+    </body></html>
+
+
+            
