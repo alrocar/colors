@@ -60,6 +60,8 @@ $(function(){
     //     });
     // }
     data.sort(function(x, y){
+        // xx = moment(x.date.split('-')[0], "MMM D, YYYY")
+        // yy = moment(y.date.split('-')[0], "MMM D, YYYY")
         return d3.descending(x.name, y.name);
     });     
     // Group by year
@@ -81,7 +83,10 @@ $(function(){
     var issues = years.selectAll(".issues").each(function(issue, i) {
         d3.select(this).selectAll("issue")
             .data(issue.values.sort(function(x, y){
-                return d3.ascending(x.name, y.name);
+                xx = moment(x.date.split('-').pop(), "MMM D, YYYY")
+                yy = moment(y.date.split('-').pop(), "MMM D, YYYY")
+                return d3.ascending(xx, yy);
+                // return d3.ascending(x.name, y.name);
             }))
             .enter()
             .append("div")
