@@ -95,7 +95,8 @@ $(function(){
     issues.selectAll(".issue").each(function(issue, i) {
         d3.select(this).selectAll("color")
             .data(issue.colors.sort(function(x, y){
-                return d3.ascending(d3.hsl(x.hex).h, d3.hsl(y.hex).h);
+                return d3.ascending(d3.hsl(x.hex).l, d3.hsl(y.hex).l);
+                // return d3.ascending(x.hex, y.hex);
             }))
             .enter()
             .append("div")
